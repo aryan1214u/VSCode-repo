@@ -8,5 +8,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aryan1214u/VSCode-repo.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/aryan1214u/VSCode-repo/issues"
+  },
+  "homepage": "https://github.com/aryan1214u/VSCode-repo#readme",
+  "dependencies": {
+    "express": "^5.3.0"
   }
 }
