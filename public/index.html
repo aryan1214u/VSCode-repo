@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campus Connect</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎓%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background scene -->
+  <div class="scene" aria-hidden="true">
+    <div class="sphere">
+      <div class="visor"></div>
+      <div class="visor-glow"></div>
+      <div class="stripe st1"></div>
+      <div class="stripe st2"></div>
+      <div class="nozzle"></div>
+    </div>
+    <div class="rock rk1"></div>
+    <div class="rock rk2"></div>
+    <div class="rock rk3"></div>
+    <div class="rock rk4"></div>
+    <div class="rock rk5"></div>
+    <div class="ground"></div>
+  </div>
+
+  <!-- Login -->
+  <div id="login" class="auth" hidden>
+    <div class="auth-box">
+      <div class="auth-label">CAMPUS CONNECT</div>
+      <h1>Your <em>schedule</em>,<br>your campus.</h1>
+      <form id="auth-form">
+        <input name="username" placeholder="Username" autocomplete="username" required>
+        <input name="password" type="password" placeholder="Password" autocomplete="current-password" required>
+        <p id="auth-err" class="err"></p>
+        <div class="btn-row">
+          <button class="btn-primary">Log in</button>
+          <button type="button" id="register" class="btn-ghost">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- App -->
+  <div id="app" hidden>
+    <header>
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <h1>Campus<em>Connect</em></h1>
+        <span id="today-label" class="hdr-date"></span>
+      </div>
+      <div class="actions">
+        <span id="who" class="who-tag"></span>
+        <select id="lead" title="Remind me how early?">
+          <option value="5">5 min early</option>
+          <option value="10">10 min early</option>
+          <option value="15">15 min early</option>
+          <option value="30">30 min early</option>
+        </select>
+        <button id="bell"   class="btn-ghost">🔔 Alerts</button>
+        <button id="upload" class="btn-ghost">↑ CSV</button>
+        <input type="file" id="file" accept=".csv" hidden>
+        <button id="add" class="btn-primary">+ Add</button>
+        <button id="logout" class="btn-ghost">Log out</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="left-col">
+        <div id="hero" class="hero-card"></div>
+        <nav class="tabs">
+          <button data-view="today" class="on">Today</button>
+          <button data-view="week">Week</button>
+          <button data-view="free">Free time</button>
+          <a href="sample-timetable.csv" download>↓ CSV template</a>
+        </nav>
+        <div id="list"></div>
+      </section>
+
+      <aside class="map-panel">
+        <div class="map-head">
+          <h3>Map</h3>
+          <div class="map-btns">
+            <button id="map-photo" class="btn-ghost sm">🖼 Photo</button>
+            <button id="add-place" class="btn-ghost sm">📍 Pin place</button>
+          </div>
+          <input type="file" id="map-file" accept="image/*" hidden>
+        </div>
+        <div id="map">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none"><polyline id="route"/></svg>
+          <div id="pins"></div>
+        </div>
+        <p id="map-note" class="note-text"></p>
+        <div id="place-list" class="place-list"></div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Add/Edit dialog -->
+  <dialog id="dlg">
+    <form id="dlg-form">
+      <h2 id="dlg-title">Add entry</h2>
+      <input name="title"    placeholder="Title — e.g. CSL201 Data Structures" required>
+      <input name="location" placeholder="Location — e.g. LH105 or Clubhouse"  required>
+      <div class="row">
+        <label>Start <input type="time" name="start" required></label>
+        <label>End   <input type="time" name="end"   required></label>
+      </div>
+      <div class="row">
+        <label>Type
+          <select name="type">
+            <option>class</option><option>club</option><option>other</option>
+          </select>
+        </label>
+        <label>Repeat
+          <select name="repeat">
+            <option value="weekly">Every week</option>
+            <option value="once">Once only</option>
+          </select>
+        </label>
+      </div>
+      <input name="note" maxlength="200" placeholder="Note (optional)">
+      <div id="days" class="chips"></div>
+      <label id="date-wrap" hidden>Date <input type="date" name="date"></label>
+      <p id="err" class="err"></p>
+      <div class="row">
+        <button type="button" id="cancel" class="btn-ghost">Cancel</button>
+        <button class="btn-primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Place name dialog -->
+  <dialog id="place-dlg">
+    <form id="place-form">
+      <h2>Name this spot</h2>
+      <input name="place" list="unplaced" placeholder="e.g. LH, Library, Clubhouse" required autocomplete="off">
+      <datalist id="unplaced"></datalist>
+      <p class="note-text">"LH" covers LH101, LH205, etc. Using an existing name moves its pin.</p>
+      <p id="place-err" class="err"></p>
+      <div class="row">
+        <button type="button" id="place-cancel" class="btn-ghost">Cancel</button>
+        <button class="btn-primary">Save pin</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toasts"></div>
+
+  <script src="js/helpers.js"></script>
+  <script src="js/timetable.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/reminders.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
