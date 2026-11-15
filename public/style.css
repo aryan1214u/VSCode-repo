@@ -467,3 +467,55 @@ label { font-size: .78rem; color: var(--mute); display: grid; gap: 4px; }
   h1 { font-size: 1.5rem; }
   .hero h2 { font-size: 1.4rem; }
 }
+/* ─── Header buttons: Alerts / CSV / Add / Logout (greyish white) ─── */
+.actions button,
+.actions .ghost {
+  background: #e5e7eb;
+  color: #1f1b2e;
+  border: 1px solid #d1d5db;
+}
+.actions button:hover,
+.actions .ghost:hover {
+  background: #f3f4f6;
+  color: #1f1b2e;
+  box-shadow: 0 8px 24px -8px rgba(229, 231, 235, .45);
+}
+/* ─── Edit / Add dialog: soft greyish white ─── */
+dialog {
+  background: #eceef1;
+  color: #1f1b2e;
+  border: 1px solid #d1d5db;
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, .7);
+  backdrop-filter: blur(6px);
+}
+dialog h2 { color: #1f1b2e; }
+dialog label { color: #4b5563; }
+
+dialog input,
+dialog select {
+  background: #ffffff;
+  color: #1f1b2e;
+  border: 1px solid #d1d5db;
+}
+dialog input:focus,
+dialog select:focus { border-color: var(--purple); }
+dialog option { background: #ffffff; color: #1f1b2e; }
+
+dialog .ghost {
+  background: #dfe2e7;
+  color: #1f1b2e;
+  border: 1px solid #d1d5db;
+}
+dialog .ghost:hover { background: #d1d5db; }
+
+dialog .chip span {
+  background: #ffffff;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+/* selected day chip purple + white text hi rahega (existing rule) */
+
+dialog .err { color: #dc2626; }
+dialog .muted { color: #6b7280; }
