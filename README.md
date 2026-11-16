@@ -1,6 +1,6 @@
 # Campus Connect
 personal college scheduling website
-
+GITHUB LINK - https://github.com/aryan1214u/VSCode-repo
 # 🎓 Campus Connect
 
 A smart timetable for campus life. It tells you **what is on right now, what is next, and where it is**, reminds you before it starts, and pins the next locations on your campus map.
